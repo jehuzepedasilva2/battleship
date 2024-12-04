@@ -1,5 +1,5 @@
-function myFunction(string) {
-  return string
+function main() {
+  console.log('Hello World');
 }
 
-export default myFunction;
+main();
