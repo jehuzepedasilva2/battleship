@@ -57,7 +57,7 @@ describe('Test Gameboard', () => {
       for (const s of shipCoordinates) {
         hits.add(s);
         let t = s.split(',');
-        expect(game.receiveAttack(parseInt(t[0]), parseInt(t[1]))).toBe(false);
+        expect(game.receiveAttack(parseInt(t[0]), parseInt(t[1]))[0]).toBe(true);
       }
     }
     const lastCoordinates = Array.from(last.getCoordinates());
@@ -65,8 +65,8 @@ describe('Test Gameboard', () => {
     const b = lastCoordinates[1].split(',')
     hits.add(lastCoordinates[0]);
     hits.add(lastCoordinates[1]);
-    expect(game.receiveAttack(parseInt(a[0]),parseInt(a[1]))).toBe(false);
-    expect(game.receiveAttack(parseInt(b[0]),parseInt(b[1]))).toBe(true);
+    expect(game.receiveAttack(parseInt(a[0]),parseInt(a[1]))[0]).toBe(true);
+    expect(game.receiveAttack(parseInt(b[0]),parseInt(b[1]))[0]).toBe(true);
   });
   it('test returning misses and hits', () => {
     expect(hits).toEqual(game.getHits());

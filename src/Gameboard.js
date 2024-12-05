@@ -26,6 +26,10 @@ export default class Gameboard {
     }
     this.#placeShipsRandomly();
   }
+
+  #isValid(x, y) {
+    return x >= 0 && y >= 0 && x < this.#rows && y < this.#cols;
+  }
   
   #isValidPlacement(x, y, length, isHorizontal) {
     if (isHorizontal) {
@@ -96,8 +100,8 @@ export default class Gameboard {
   }
 
   receiveAttack(x, y) {
-    if (this.#board[x][y] === -1 || this.#hits.has(`${x},${y}`) || this.#misses.has(`${x},${y}`)) {
-      return false;
+    if (this.#board[x][y] === -1 || this.#hits.has(`${x},${y}`) || this.#misses.has(`${x},${y}`) || !this.#isValid(x, y)) {
+      return [false, this.#gameWon()];
     }
     for (const ship of this.#ships) {
       if (ship.hasCoordinates(x, y)) {
@@ -107,12 +111,12 @@ export default class Gameboard {
         if (ship.isSunk()) {
           this.#numShips--;
         }
-        return this.#gameWon();
+        return [true, this.#gameWon()];
       }
     }
     this.#misses.add(`${x},${y}`);
     this.#board[x][y] = -1;
-    return false;
+    return [true, this.#gameWon()];
   }
 
   getHits() {
