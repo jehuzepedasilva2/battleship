@@ -37,19 +37,28 @@ export default class Gameboard {
     } else {
       if (x + length > this.#rows) return false;
     }
-  
+    
     if (isHorizontal) {
-      for (let i = y; i < y + length; i++) {
-        if (this.#board[x][i] === 1) return false;
+      for (let i = x - 1; i <= x + 1; i++) { 
+        for (let j = y - 1; j <= y + length; j++) { 
+          if (this.#isValid(i, j) && this.#board[i][j] === 1) {
+            return false; 
+          }
+        }
       }
     } else {
-      for (let i = x; i < x + length; i++) {
-        if (this.#board[i][y] === 1) return false;
+      for (let i = x - 1; i <= x + length; i++) {
+        for (let j = y - 1; j <= y + 1; j++) { 
+          if (this.#isValid(i, j) && this.#board[i][j] === 1) {
+            return false;
+          }
+        }
       }
     }
   
     return true;
   }
+  
   
   #placeShip(x, y, length, isHorizontal, ship) {
     if (isHorizontal) {
@@ -100,13 +109,13 @@ export default class Gameboard {
   }
 
   receiveAttack(x, y) {
-    if (this.#board[x][y] === -1 || this.#hits.has(`${x},${y}`) || this.#misses.has(`${x},${y}`) || !this.#isValid(x, y)) {
+    if (this.#board[x][y] === -1 || this.#hits.has(`${x},${y}`) || this.#misses.has(`${x},${y}`) || !this.#isValid(x, y) || this.#board[x][y] === -2) {
       return [false, this.#gameWon()];
     }
     for (const ship of this.#ships) {
       if (ship.hasCoordinates(x, y)) {
         ship.hit();
-        this.#board[x][y] = -1;
+        this.#board[x][y] = -2;
         this.#hits.add(`${x},${y}`);
         if (ship.isSunk()) {
           this.#numShips--;
@@ -127,7 +136,11 @@ export default class Gameboard {
     return this.#misses;
   }
 
-  getShipsForTests() {
+  getShips() {
     return this.#ships
+  }
+
+  getBoard() {
+    return this.#board;
   }
 }

@@ -46,7 +46,7 @@ describe('Test Ship', () => {
 
 describe('Test Gameboard', () => {
   const game = new Gameboard();
-  let ships = game.getShipsForTests();
+  let ships = game.getShips();
   let hits = new Set()
   let misses = new Set();
   it('test receiveAttack() function', () => {

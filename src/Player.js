@@ -18,6 +18,10 @@ export default class Player {
   }
 
   getBoard() {
+    return this.#playersBoard.getBoard();
+  }
+
+  getGameboard() {
     return this.#playersBoard;
   }
 

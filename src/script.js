@@ -1,7 +1,9 @@
-import play from './Game.js';
+import { handleReset, handleStart } from "./handleEvents.js";
+import "./styles.css";
 
 function main() {
-  console.log(play());
+  handleReset();
+  handleStart();
 }
 
 main();
