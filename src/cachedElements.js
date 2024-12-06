@@ -6,16 +6,32 @@ function getAllSquares() {
   return document.querySelectorAll('.square');
 }
 
+function getAllUserSquares() {
+  return document.querySelectorAll('.user .square');
+}
+
+function getAllComputerSquares() {
+  return document.querySelectorAll('.computer .square');
+}
+
+function getPlayerBoard() {
+  return document.querySelector('.user');
+}
+
+function getComputerBoard() {
+  return document.querySelector('.computer');
+}
+
 function getCurrBoard() {
   return document.querySelector('.board.curr');
 }
 
-function getYourBoardButton() {
-  return document.getElementById('your-board');
+function getPlayerBoardButton() {
+  return document.querySelector('.your-board');
 }
 
 function getOpponentBoardButton() {
-  return document.getElementById('opponent-board');
+  return document.querySelector('.opponent-board');
 }
 
 function getStartButton() {
@@ -26,12 +42,21 @@ function getResetButton() {
   return document.querySelector('.reset-btn');
 }
 
+function getOnBoardButton() {
+  return document.querySelector('.on-board');
+}
+
 export {
   getSquare,
   getAllSquares,
+  getAllUserSquares,
+  getAllComputerSquares,
   getCurrBoard,
-  getYourBoardButton,
+  getPlayerBoardButton,
   getOpponentBoardButton,
   getStartButton,
   getResetButton,
+  getPlayerBoard, 
+  getComputerBoard,
+  getOnBoardButton,
 }

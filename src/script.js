@@ -1,9 +1,8 @@
-import { handleReset, handleStart } from "./handleEvents.js";
+import { handleAllEvents } from './HandleEvents.js';
 import "./styles.css";
 
 function main() {
-  handleReset();
-  handleStart();
+  handleAllEvents();
 }
 
 main();

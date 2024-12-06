@@ -1,45 +1,75 @@
-import Player from "./Player";
-import { renderYourBoard } from "./renderDOM";
+import Player from "./Player.js";
+import { getAllComputerSquares } from "./cachedElements.js";
+import { renderOpponentsBoard, renderPlayerBoard } from "./renderDOM.js";
+import { 
+  handleComputerSquares,
+  manuallySwitchToOpponentBoard, 
+  manuallySwitchToPlayerBoard,
+} from "./HandleEvents.js";
 
-// only plays against itself for now
-function play() {
-  let isPlayerOne = true;
-  const playerOne = new Player();
-  const playerTwo = new Player(false); // computer
+export default class Game {
 
-  renderYourBoard(playerOne);
-  playerTwo.attack(2, 0, playerOne.getGameboard());
-  renderYourBoard(playerOne);
+  #computer;
+  #player;
+  #isPlayerOne;
 
-  if (true) {
-    return;
+  constructor() {
+    this.#computer = new Player(false); // computer
+    this.#player = new Player()
+    this.#isPlayerOne = this.#chooseStartPlayer();
   }
-  
-  while (!playerOne.isWinner() && !playerTwo.isWinner()) {
-    // Render the board here, integrate DOM changes later
-    if (isPlayerOne) {
-      renderBoard(playerOne);
-    }
-    // } else {
-    //   renderBoard(playerTwo);
-    // }
 
-    const x = Math.floor(Math.random() * 10);
-    const y = Math.floor(Math.random() * 10);
-      // Ask for coordinates from player one here, integrate DOM changes later;
-    if (isPlayerOne && !playerOne.attack(x, y, playerTwo.getGameboard())) {
-      continue;
+  #chooseStartPlayer() {
+    if (Math.random() < 0.5) {
+      return true;
     }
-    if (!isPlayerOne && !playerTwo.attack(x, y, playerOne.getGameboard())) {
-      continue;
-    }
-    isPlayerOne = !isPlayerOne;
-  }  
-  if (playerOne.isWinner()) {
-    return 'Player One Wins!';
-  } else {
-    return 'Player Two Wins!';
+    return false;
   }
+
+  // wrong
+  play() {
+    if (this.#isPlayerOne) {
+      manuallySwitchToOpponentBoard();
+      const allSquares = getAllComputerSquares();
+      allSquares.forEach(square => {
+        square.addEventListener('click', () => {
+          let x = parseInt(square.classList[1].split('-')[1]) - 1;
+          let y = parseInt(square.classList[2].split('-')[1]) - 1;
+          let isValid = this.#player.attack(x, y, this.#computer.getGameboard());
+          if (isValid) {
+            renderOpponentsBoard(this.#computer);
+            this.#isPlayerOne = false;
+            setTimeout(() => {
+              this.play(); // Delay the play call by 1000ms
+            }, 800);
+          } else {
+            this.play();
+          }
+        });
+      });
+    } else {
+      manuallySwitchToPlayerBoard();
+      const x = Math.floor(Math.random() * 10);
+      const y = Math.floor(Math.random() * 10);
+      let isValid = this.#computer.attack(x, y, this.#player.getGameboard());
+      if (isValid) {
+        setTimeout(() => {
+          renderPlayerBoard(this.#player); // Delay the play call by 1000ms
+        }, 800);
+        this.#isPlayerOne = true
+        this.play();
+      } else {
+        this.play();
+      }
+    }    
+  }
+
+  getPlayer() {
+    return this.#player;
+  }
+
+  getComputer() {
+    return this.#computer;
+  }
+
 }
-
-export default play;

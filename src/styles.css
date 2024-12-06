@@ -114,9 +114,14 @@ body {
   background-color: var(--font-color);
 }
 
-.top-bottom > button {
+.your-board, 
+.opponent-board {
   appearance: none;
   border: none;
+  padding: 0.2rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  border-radius: 0.5rem;
   background-color: var(--board-frame-bg-color);
   font-size: 1rem;
   font-weight: 600;
@@ -152,6 +157,15 @@ body {
 .bottom > button:active, 
 .top-bottom > button:active {
   opacity: 0.8;
+}
+
+.on-board {
+  padding: 0.2rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  border-radius: 0.5rem;
+  color: var(--board-frame-bg-color);
+  background-color: #114A68;
 }
 
 /* -----------------SQUARES------------------------ */
