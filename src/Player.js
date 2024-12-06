@@ -12,9 +12,9 @@ export default class Player {
   }
 
   attack(x, y, opponentBoard) {
-    const [isValid, isWon] = opponentBoard.receiveAttack(x, y);
+    const [isValid, isHit, isWon] = opponentBoard.receiveAttack(x, y);
     this.#isWinner = isWon;
-    return isValid
+    return [isValid, isHit]
   }
 
   getBoard() {

@@ -1,4 +1,4 @@
-import { handleAllEvents } from './HandleEvents.js';
+import { handleAllEvents } from './handleEvents.js';
 import "./styles.css";
 
 function main() {

@@ -1,9 +1,6 @@
 import { 
-  getCurrBoard, 
   getOpponentBoardButton, 
-  getSquare,
   getAllSquares,
-  getAllUserSquares,
   getAllComputerSquares,
   getStartButton, 
   getResetButton,
@@ -32,12 +29,7 @@ function setUp() {
 function handleComputerSquares() {
   const allSquares = getAllComputerSquares();
   allSquares.forEach(square => {
-    square.addEventListener('click', () => {
-      let x = parseInt(square.classList[1].split('-')[1])-1;
-      let y = parseInt(square.classList[2].split('-')[1])-1;
-      isValid = privateVars.player.attack(x, y, privateVars.computerGameboard);
-      renderOpponentsBoard(privateVars.computer);
-    })
+    square.addEventListener('click', () => privateVars.game.handlePlayerOneTurn(square));
   })
 }
 
@@ -47,6 +39,7 @@ function handleStart() {
     setUp();
     handleSwitchToOpponentsBoard();
     handleSwitchToPlayerBoard();
+    handleComputerSquares();
     privateVars.game.play();
     startButton.disabled = true;
   });
@@ -74,6 +67,9 @@ function handleSwitchToPlayerBoard() {
   const button = getPlayerBoardButton();
   button.addEventListener('click', () => {
     const onBoard = getOnBoardButton();
+    if (onBoard === null) {
+      return;
+    }
     onBoard.classList.remove('on-board');
     button.classList.add('on-board');
     renderPlayerBoard(privateVars.player);
@@ -94,7 +90,9 @@ function handleSwitchToOpponentsBoard() {
   const button = getOpponentBoardButton();
   button.addEventListener('click', () => {
     const onBoard = getOnBoardButton();
-    console.log(onBoard);
+    if (onBoard === null) {
+      return;
+    }
     onBoard.classList.remove('on-board');
     button.classList.add('on-board');
     renderOpponentsBoard(privateVars.computer);
@@ -110,6 +108,7 @@ function manuallySwitchToOpponentBoard() {
   button.classList.add('on-board');
   renderOpponentsBoard(privateVars.computer);
 }
+
 
 function handleAllEvents() {
   handleReset();

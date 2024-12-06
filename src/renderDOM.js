@@ -1,4 +1,8 @@
-import { getSquare, getPlayerBoard, getComputerBoard } from "./cachedElements.js";
+import { 
+  getSquare, 
+  getPlayerBoard, 
+  getComputerBoard 
+} from "./cachedElements.js";
 
 function display(i, j, status) {
   const square = getSquare(i, j);

@@ -110,7 +110,7 @@ export default class Gameboard {
 
   receiveAttack(x, y) {
     if (this.#board[x][y] === -1 || this.#hits.has(`${x},${y}`) || this.#misses.has(`${x},${y}`) || !this.#isValid(x, y) || this.#board[x][y] === -2) {
-      return [false, this.#gameWon()];
+      return [false, false, this.#gameWon()];
     }
     for (const ship of this.#ships) {
       if (ship.hasCoordinates(x, y)) {
@@ -120,12 +120,12 @@ export default class Gameboard {
         if (ship.isSunk()) {
           this.#numShips--;
         }
-        return [true, this.#gameWon()];
+        return [true, true, this.#gameWon()];
       }
     }
     this.#misses.add(`${x},${y}`);
     this.#board[x][y] = -1;
-    return [true, this.#gameWon()];
+    return [true, false, this.#gameWon()];
   }
 
   getHits() {

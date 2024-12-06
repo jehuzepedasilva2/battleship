@@ -1,11 +1,11 @@
 import Player from "./Player.js";
-import { getAllComputerSquares } from "./cachedElements.js";
-import { renderOpponentsBoard, renderPlayerBoard } from "./renderDOM.js";
 import { 
-  handleComputerSquares,
-  manuallySwitchToOpponentBoard, 
+  renderOpponentsBoard, 
+  renderPlayerBoard 
+} from "./renderDOM.js";
+import { 
   manuallySwitchToPlayerBoard,
-} from "./HandleEvents.js";
+} from "./handleEvents.js";
 
 export default class Game {
 
@@ -26,42 +26,47 @@ export default class Game {
     return false;
   }
 
-  // wrong
   play() {
     if (this.#isPlayerOne) {
-      manuallySwitchToOpponentBoard();
-      const allSquares = getAllComputerSquares();
-      allSquares.forEach(square => {
-        square.addEventListener('click', () => {
-          let x = parseInt(square.classList[1].split('-')[1]) - 1;
-          let y = parseInt(square.classList[2].split('-')[1]) - 1;
-          let isValid = this.#player.attack(x, y, this.#computer.getGameboard());
-          if (isValid) {
-            renderOpponentsBoard(this.#computer);
-            this.#isPlayerOne = false;
-            setTimeout(() => {
-              this.play(); // Delay the play call by 1000ms
-            }, 800);
-          } else {
-            this.play();
-          }
-        });
-      });
+      this.playerTurn();
     } else {
-      manuallySwitchToPlayerBoard();
-      const x = Math.floor(Math.random() * 10);
-      const y = Math.floor(Math.random() * 10);
-      let isValid = this.#computer.attack(x, y, this.#player.getGameboard());
-      if (isValid) {
-        setTimeout(() => {
-          renderPlayerBoard(this.#player); // Delay the play call by 1000ms
-        }, 800);
-        this.#isPlayerOne = true
-        this.play();
-      } else {
-        this.play();
-      }
-    }    
+      this.computerTurn();
+    }
+  }
+  
+  playerTurn() {
+    manuallySwitchToPlayerBoard();
+  }
+  
+  computerTurn() {
+    manuallySwitchToPlayerBoard();
+    const x = Math.floor(Math.random() * 10);
+    const y = Math.floor(Math.random() * 10);
+    let [isValid, isHit] = this.#computer.attack(x, y, this.#player.getGameboard());
+    if (isValid && isHit) {
+      renderPlayerBoard(this.#player);
+      setTimeout(() => this.play(), 800);
+    } else if (isValid) {
+      renderPlayerBoard(this.#player);
+      this.#isPlayerOne = true;
+      setTimeout(() => this.play(), 800);
+    } else {
+      this.computerTurn();
+    }
+  }
+  
+
+  handlePlayerOneTurn(square) {
+    let x = parseInt(square.classList[1].split('-')[1]) - 1;
+    let y = parseInt(square.classList[2].split('-')[1]) - 1;
+    let [isValid, isHit] = this.#player.attack(x, y, this.#computer.getGameboard());
+    if (isValid && isHit) {
+      renderOpponentsBoard(this.#computer);
+    } else {
+      renderOpponentsBoard(this.#computer);
+      this.#isPlayerOne = false;
+      setTimeout(() => this.play(), 800);
+    }
   }
 
   getPlayer() {
