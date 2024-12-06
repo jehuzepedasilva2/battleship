@@ -5,6 +5,7 @@ import {
 } from "./renderDOM.js";
 import { 
   manuallySwitchToPlayerBoard,
+  manuallySwitchToOpponentBoard
 } from "./handleEvents.js";
 
 export default class Game {
@@ -35,25 +36,41 @@ export default class Game {
   }
   
   playerTurn() {
-    manuallySwitchToPlayerBoard();
+    setTimeout(() => manuallySwitchToOpponentBoard(), 200);
   }
   
   computerTurn() {
     manuallySwitchToPlayerBoard();
     const x = Math.floor(Math.random() * 10);
     const y = Math.floor(Math.random() * 10);
-    let [isValid, isHit] = this.#computer.attack(x, y, this.#player.getGameboard());
-    if (isValid && isHit) {
-      renderPlayerBoard(this.#player);
-      setTimeout(() => this.play(), 800);
-    } else if (isValid) {
-      renderPlayerBoard(this.#player);
-      this.#isPlayerOne = true;
-      setTimeout(() => this.play(), 800);
-    } else {
-      this.computerTurn();
-    }
+
+    setTimeout(() => renderPlayerBoard(this.#player), 800);
+
+    // Delay the attack and handle results asynchronously
+    this.delayedAttack(x, y).then(({ isValid, isHit }) => {
+      if (isValid && isHit) {
+        renderPlayerBoard(this.#player);
+        setTimeout(() => this.play(), 800);
+      } else if (isValid) {
+        renderPlayerBoard(this.#player);
+        this.#isPlayerOne = true;
+        setTimeout(() => this.play(), 800);
+      } else {
+          this.computerTurn(); // Retry on invalid attack
+      }
+    });
   }
+
+// Helper method to delay the attack
+  delayedAttack(x, y, delay = 500) {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+          const [isValid, isHit] = this.#computer.attack(x, y, this.#player.getGameboard());
+          resolve({ isValid, isHit });
+      }, delay);
+    });
+  }
+
   
 
   handlePlayerOneTurn(square) {
@@ -65,7 +82,8 @@ export default class Game {
     } else {
       renderOpponentsBoard(this.#computer);
       this.#isPlayerOne = false;
-      setTimeout(() => this.play(), 800);
+      setTimeout(() => this.play(), 500);
+      // this.play();
     }
   }
 
