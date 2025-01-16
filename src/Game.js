@@ -47,7 +47,11 @@ export default class Game {
     setTimeout(() => renderPlayerBoard(this.#player), 800);
 
     // Delay the attack and handle results asynchronously
-    this.delayedAttack(x, y).then(({ isValid, isHit }) => {
+    this.delayedAttack(x, y).then(({ isValid, isHit, isWon }) => {
+      if (isWon) {
+        alert('Game Over');
+        return;
+      }
       if (isValid && isHit) {
         renderPlayerBoard(this.#player);
         setTimeout(() => this.play(), 800);
@@ -65,8 +69,8 @@ export default class Game {
   delayedAttack(x, y, delay = 500) {
     return new Promise((resolve) => {
       setTimeout(() => {
-          const [isValid, isHit] = this.#computer.attack(x, y, this.#player.getGameboard());
-          resolve({ isValid, isHit });
+          const [isValid, isHit, isWon] = this.#computer.attack(x, y, this.#player.getGameboard());
+          resolve({ isValid, isHit, isWon });
       }, delay);
     });
   }
@@ -76,7 +80,11 @@ export default class Game {
   handlePlayerOneTurn(square) {
     let x = parseInt(square.classList[1].split('-')[1]) - 1;
     let y = parseInt(square.classList[2].split('-')[1]) - 1;
-    let [isValid, isHit] = this.#player.attack(x, y, this.#computer.getGameboard());
+    let [isValid, isHit, isWon] = this.#player.attack(x, y, this.#computer.getGameboard());
+    if (isWon) {
+      alert('You Win!')
+      return;
+    }
     if (isValid && isHit) {
       renderOpponentsBoard(this.#computer);
     } else {

@@ -14,7 +14,7 @@ export default class Player {
   attack(x, y, opponentBoard) {
     const [isValid, isHit, isWon] = opponentBoard.receiveAttack(x, y);
     this.#isWinner = isWon;
-    return [isValid, isHit]
+    return [isValid, isHit, isWon]
   }
 
   getBoard() {
