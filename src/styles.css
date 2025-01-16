@@ -297,18 +297,9 @@ body {
     padding: 0.5rem;
   }
 
-  .board-container {
-    height: 100%;
-    width: 100%;
-  }
-
 }
 
 @media (max-width: 850px) {
-
-  body {
-    padding: 0.5rem;
-  }
 
   .top-top {
     gap: 0;
@@ -325,8 +316,6 @@ body {
 @media (max-width: 650px) {
 
   .board-container {
-    height: 100%;
-    width: 80%;
     padding: 1rem;
   }
 
@@ -339,8 +328,6 @@ body {
 @media (max-width: 500px) {
 
   .board-container {
-    height: 100%;
-    width: 100%;
     padding: 0.8rem;
   }
 
@@ -355,18 +342,12 @@ body {
 @media (max-width: 400px) {
 
   .board-container {
-    height: 100%;
-    width: 100%;
     padding: 0.6rem;
   }
 
 }
 
 @media (max-width: 450) {
-  .board-container {
-    height: 100%;
-    width: 100%;
-  }
 
   .middle {
     padding: 0.8rem;
@@ -377,8 +358,6 @@ body {
 @media (max-width: 350px) {
 
   .board-container {
-    height: 100%;
-    width: 100%;
     padding: 0.5rem;
   }
 
