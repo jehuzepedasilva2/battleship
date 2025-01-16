@@ -288,13 +288,23 @@ body {
 }
 
 /* ----- MEDIA QUERIES FOR DEVICES ------ */
-@media (max-width: 1000px) {
+@media (max-width: 1024px) {
   .title {
     justify-content: center;
   }
+
+  body {
+    padding: 0.5rem;
+  }
+
+  .board-container {
+    height: 100%;
+    width: 100%;
+  }
+
 }
 
-@media (max-width: 800px) {
+@media (max-width: 850px) {
 
   body {
     padding: 0.5rem;
@@ -302,12 +312,12 @@ body {
 
   .top-top {
     gap: 0;
-    transform: scale(0.8);
+    transform: scale(0.9);
   }
 
   .board-container {
     height: 100%;
-    width: 60%;
+    width: 100%;
     padding: 1.2rem;
   }
 }
@@ -316,7 +326,7 @@ body {
 
   .board-container {
     height: 100%;
-    width: 70%;
+    width: 80%;
     padding: 1rem;
   }
 
@@ -330,7 +340,7 @@ body {
 
   .board-container {
     height: 100%;
-    width: 80%;
+    width: 100%;
     padding: 0.8rem;
   }
 
@@ -346,13 +356,18 @@ body {
 
   .board-container {
     height: 100%;
-    width: 85%;
+    width: 100%;
     padding: 0.6rem;
   }
 
 }
 
 @media (max-width: 450) {
+  .board-container {
+    height: 100%;
+    width: 100%;
+  }
+
   .middle {
     padding: 0.8rem;
   }
@@ -363,7 +378,7 @@ body {
 
   .board-container {
     height: 100%;
-    width: 90%;
+    width: 100%;
     padding: 0.5rem;
   }
 
@@ -374,11 +389,6 @@ body {
 }
 
 @media (max-width: 340px) {
-
-  .board-container {
-    height: 100%;
-    width: 100%;
-  }
 
   .middle {
     padding: 0.4rem;
