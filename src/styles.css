@@ -29,6 +29,7 @@
 }
 
 body {
+  min-width: 270px;
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -78,6 +79,7 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
+  text-align: center;
 }
 
 .line {
@@ -283,4 +285,111 @@ body {
   height: 20%;
   border-radius: 100%;
   background-color: var(--miss-color);
+}
+
+/* ----- MEDIA QUERIES FOR DEVICES ------ */
+@media (max-width: 1000px) {
+  .title {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 800px) {
+
+  body {
+    padding: 0.5rem;
+  }
+
+  .top-top {
+    gap: 0;
+    transform: scale(0.8);
+  }
+
+  .board-container {
+    height: 100%;
+    width: 60%;
+    padding: 1.2rem;
+  }
+}
+
+@media (max-width: 650px) {
+
+  .board-container {
+    height: 100%;
+    width: 70%;
+    padding: 1rem;
+  }
+
+  .bottom {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+
+@media (max-width: 500px) {
+
+  .board-container {
+    height: 100%;
+    width: 80%;
+    padding: 0.8rem;
+  }
+
+  .bottom > button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+}
+
+@media (max-width: 400px) {
+
+  .board-container {
+    height: 100%;
+    width: 85%;
+    padding: 0.6rem;
+  }
+
+}
+
+@media (max-width: 450) {
+  .middle {
+    padding: 0.8rem;
+  }
+}
+
+
+@media (max-width: 350px) {
+
+  .board-container {
+    height: 100%;
+    width: 90%;
+    padding: 0.5rem;
+  }
+
+  .middle {
+    padding: 0.6rem;
+  }
+
+}
+
+@media (max-width: 340px) {
+
+  .board-container {
+    height: 100%;
+    width: 100%;
+  }
+
+  .middle {
+    padding: 0.4rem;
+  }
+
+}
+
+@media (max-width: 320px) {
+
+  .middle {
+    padding: 0.2rem;
+  }
+
 }
